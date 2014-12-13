@@ -14,8 +14,8 @@
 #include <stdint.h>
 #include <err.h>
 
-// from mach-davinchi hardware.h
-#define IO_OFFSET	0//0xfd000000
+// from mach-davinci hardware.h
+#define IO_OFFSET	0	// 0xfd000000
 #define IO_ADDR(addr)	((addr) + IO_OFFSET)
 
 #define DAVINCI_SYSTEM_MODULE_BASE        0x01C40000
@@ -171,7 +171,7 @@ int main(int argc, char *argv[])
 			(device_id >> 12) & 0xffff,
 			(device_id >> 1) & 0x7ff);
 
-	for (int i = 0; i < 4; i++) {
+	for (int i = 0; i < 5; i++) {
 		printf("PINMUX%d: 0x%08X\n", i, map[i]);
 		for (const struct reg_info *p = mux_info_table[i]; p->name != NULL; p++)
 			printf("\t%s: %02X\n", p->name, (map[i] >> p->shift) & p->mask);
