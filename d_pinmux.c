@@ -5,29 +5,10 @@
  */
 
 
-#include <sys/mman.h>
-#include <fcntl.h>
-#include <err.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdint.h>
 #include <err.h>
 
-// from mach-davinci hardware.h
-#define IO_OFFSET	0	// 0xfd000000
-#define IO_ADDR(addr)	((addr) + IO_OFFSET)
+#include "davinci.h"
 
-#define DAVINCI_SYSTEM_MODULE_BASE        0x01C40000
-
-// from datasheet
-#define PINMUX0		IO_ADDR(DAVINCI_SYSTEM_MODULE_BASE + 0x00)
-#define PINMUX1		IO_ADDR(DAVINCI_SYSTEM_MODULE_BASE + 0x04)
-#define PINMUX2		IO_ADDR(DAVINCI_SYSTEM_MODULE_BASE + 0x08)
-#define PINMUX3		IO_ADDR(DAVINCI_SYSTEM_MODULE_BASE + 0x0c)
-#define PINMUX4		IO_ADDR(DAVINCI_SYSTEM_MODULE_BASE + 0x10)
-
-#define MMAP_SIZE	(IO_ADDR(0x01C4FFFF) - DAVINCI_SYSTEM_MODULE_BASE)
 
 struct reg_info {
 	char *name;
@@ -150,17 +131,10 @@ const struct reg_info *mux_info_table[] = {
 
 int main(int argc, char *argv[])
 {
-	volatile uint32_t *map = NULL;
+	int fd;
+	volatile uint32_t *sys_mod = mmap_perith(SYSTEM_MODULE_BASE, MMAP_SZ_SYSTEM_MODULE, &fd);
 
-	int fd = open("/dev/mem", O_RDWR);
-	if (fd < 0)
-		err(1, "open /dev/mem:");
-
-	map = mmap(NULL, MMAP_SIZE, PROT_READ | PROT_WRITE, MAP_SHARED, fd, PINMUX0);
-	if (map == MAP_FAILED)
-		err(1, "mmap:");
-
-	uint32_t device_id = map[10];
+	uint32_t device_id = sys_mod[10];
 
 	printf("DEVICE_ID: 0x%08X\n", device_id);
 	printf(
@@ -172,12 +146,11 @@ int main(int argc, char *argv[])
 			(device_id >> 1) & 0x7ff);
 
 	for (int i = 0; i < 5; i++) {
-		printf("PINMUX%d: 0x%08X\n", i, map[i]);
+		printf("PINMUX%d: 0x%08X\n", i, sys_mod[i]);
 		for (const struct reg_info *p = mux_info_table[i]; p->name != NULL; p++)
-			printf("\t%s: %02X\n", p->name, (map[i] >> p->shift) & p->mask);
+			printf("\t%s: %02X\n", p->name, (sys_mod[i] >> p->shift) & p->mask);
 	}
 
-	munmap(map, MMAP_SIZE);
-	close(fd);
+	munmap_perith(sys_mod, MMAP_SZ_SYSTEM_MODULE, &fd);
 	return 0;
 }
