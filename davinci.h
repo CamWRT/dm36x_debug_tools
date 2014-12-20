@@ -16,6 +16,8 @@
 #define MMAP_SZ_GPIO		(0x01C67FFF - DAVINCI_GPIO_BASE)
 
 
+#define ARRAY_SIZE(arr)		(sizeof(arr)/sizeof(arr[0]))
+
 /* MMAP helper */
 
 #include <sys/mman.h>
@@ -46,6 +48,11 @@ static inline void munmap_perith(volatile void *mem, size_t size, int *fd)
 {
 	munmap(mem, size);
 	close(*fd); *fd = -1;
+}
+
+static inline uint32_t read_u32(volatile void *reg)
+{
+	return *((uint32_t*)reg);
 }
 
 #endif /* DAVINCI_H */
