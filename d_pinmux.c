@@ -185,7 +185,7 @@ const struct reg_field reg_fields_edma_evtmux[] = {
 	REG_MUX("EVT2", 0, 1),
 };
 
-const struct reg_field reg_field_vdac_config[] = {
+const struct reg_field reg_fields_vdac_config[] = {
 	REG_MUX("TVSHORT", 31, 1),
 	REG_MUX("TVINT", 30, 1),
 	REG_MUX("PDTVSHORTZ", 19, 1),
@@ -197,6 +197,19 @@ const struct reg_field reg_field_vdac_config[] = {
 	REG_MUX("PWD_A", 0, 1),
 };
 
+const struct reg_field reg_fields_usb_phy_ctrl[] = {
+	REG_MUX("PHYCLKFREQ", 12, 15),
+	REG_MUX("DATAPOL", 11, 1),
+	REG_MUX("PHYCLKSRC", 9, 3),
+	REG_MUX("PHYCLKGD", 8, 1),
+	REG_MUX("SESNDEN", 7, 1),
+	REG_MUX("VBDTCTEN", 6, 1),
+	REG_MUX("VBUSENS", 5, 1),
+	REG_MUX("PHYPLLON", 4, 1),
+	REG_MUX("OTGPDWN", 1, 1),
+	REG_MUX("PHYPDWN", 0, 1),
+};
+
 const struct sys_reg_info sys_registers[] = {
 	REG_INFO("DEVICE_ID", 0x28, reg_fields_device_id),
 	REG_INFO("PINMUX0", 0x00, reg_fields_pinmux0),
@@ -206,7 +219,8 @@ const struct sys_reg_info sys_registers[] = {
 	REG_INFO("PINMUX4", 0x10, reg_fields_pinmux4),
 	REG_INFO("ARM_INTMUX", 0x18, reg_fields_arm_intmux),
 	REG_INFO("EDMA_EVTMUX", 0x1C, reg_fields_edma_evtmux),
-	REG_INFO("VDAC_CONFIG", 0x2C, reg_field_vdac_config),
+	REG_INFO("VDAC_CONFIG", 0x2C, reg_fields_vdac_config),
+	REG_INFO("USB_PHY_CTRL", 0x34, reg_fields_usb_phy_ctrl),
 };
 
 
