@@ -219,6 +219,21 @@ const struct reg_field reg_fields_vpss_clk_ctrl[] = {
 	REG_FMT_D01("VPSS_MUXSEL", 0, 3),
 };
 
+const struct reg_field reg_fields_peri_clkctrl[] = {
+	REG_FMT_D01("PRTCSSCLKS", 30, 1),
+	REG_FMT_D01("ARMCLKS", 29, 1),
+	REG_FMT_D01("KEYSCLKS", 28, 1),
+	REG_FMT_D01("DDRCLKS", 27, 1),
+	REG_FMT_D01("HDVICPCLKS", 26, 1),
+	{"DIV3", "0x%03X", 16, 0x3FF},
+	{"DIV2", "0x%03X", 7, 0x1FF},
+	{"DIV1", "0x%02X", 3, 0x0f},
+	REG_FMT_D01("CLOCKOUT2EN", 2, 1),
+	REG_FMT_D01("CLOCKOUT1EN", 1, 1),
+	REG_FMT_D01("CLOCKOUT0EN", 0, 1),
+
+};
+
 const struct sys_reg_info sys_registers[] = {
 	REG_INFO("DEVICE_ID", 0x28, reg_fields_device_id),
 	REG_INFO("PINMUX0", 0x00, reg_fields_pinmux0),
@@ -231,6 +246,7 @@ const struct sys_reg_info sys_registers[] = {
 	REG_INFO("VDAC_CONFIG", 0x2C, reg_fields_vdac_config),
 	REG_INFO("USB_PHY_CTRL", 0x34, reg_fields_usb_phy_ctrl),
 	REG_INFO("VPSS_CLK_CTRL", 0x44, reg_fields_vpss_clk_ctrl),
+	REG_INFO("PERI_CLKCTRL", 0x48, reg_fields_peri_clkctrl),
 };
 
 
