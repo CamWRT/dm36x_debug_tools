@@ -8,7 +8,7 @@ CROSS_COMPILE?=arm-none-linux-gnueabi-
 CC:=$(CROSS_COMPILE)gcc
 CXX:=$(CROSS_COMPILE)g++
 
-CFLAGS:=-std=c99 -I.
+CFLAGS:=-std=c99 -I. -O2 -fmerge-constants
 
 all: d_pinmux d_gpio
 
