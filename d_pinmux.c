@@ -185,6 +185,18 @@ const struct reg_field reg_fields_edma_evtmux[] = {
 	REG_MUX("EVT2", 0, 1),
 };
 
+const struct reg_field reg_field_vdac_config[] = {
+	REG_MUX("TVSHORT", 31, 1),
+	REG_MUX("TVINT", 30, 1),
+	REG_MUX("PDTVSHORTZ", 19, 1),
+	REG_MUX("XDMODE", 5, 1),
+	REG_MUX("PWDNZ_TVDETECT", 4, 1),
+	REG_MUX("PWDNBUFZ", 3, 1),
+	REG_MUX("PWD_C", 2, 1),
+	REG_MUX("PWD_B", 1, 1),
+	REG_MUX("PWD_A", 0, 1),
+};
+
 const struct sys_reg_info sys_registers[] = {
 	REG_INFO("DEVICE_ID", 0x28, reg_fields_device_id),
 	REG_INFO("PINMUX0", 0x00, reg_fields_pinmux0),
@@ -194,6 +206,7 @@ const struct sys_reg_info sys_registers[] = {
 	REG_INFO("PINMUX4", 0x10, reg_fields_pinmux4),
 	REG_INFO("ARM_INTMUX", 0x18, reg_fields_arm_intmux),
 	REG_INFO("EDMA_EVTMUX", 0x1C, reg_fields_edma_evtmux),
+	REG_INFO("VDAC_CONFIG", 0x2C, reg_field_vdac_config),
 };
 
 
