@@ -21,4 +21,4 @@ d_pll: d_pll.c
 
 
 clean:
-	rm -f d_pinmux d_gpio
+	rm -f d_pinmux d_gpio d_pll
